@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artemis Bank{% endblock %}
+{% block linkcss %}<link rel="stylesheet" href="../assets/css/homePage/styles.css" />{% endblock %}
+
+{% block body %}
+<body>
+    
+
+  <!-- Sidebar for screens with a width of 848 pixels or less -->
+    <header><nav>
+      <div class="nav__logo">
+        <a id="navImg" href="#"><img  src="../assets/images/homePage/iconWhite0.png" alt=""></a><a>Artemis <span class="light-logo">Bank</span></a>
+      </div>
+      <ul class="nav__links">
+        <li class="link">Home</li>
+        <li class="link">Features</li>
+        <li class="link">About Us</li>
+        <li class="link">Contact Us</li>
+          {% if  app.user %}
+                  <li class="link login"  ><a href="{{ path('user_profile') }}"> Compte </a> </li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                   <li class="link login"  > <a href="{{ path('app_gestion_user') }}"> Dashboard Adminstratif </a> </li>
+
+                   {% endif %}
+          {% else %}
+        <li class="link login"><a href="{{ path('app_login') }}">Login</a></li>
+        <li class="link signUp"><a href="{{path('app_register')}}">Sign Up</a></li>
+          {% endif %}
+      </ul>
+    </nav></header>
+    
+ <div class="main"  >
+    <div class="container">
+      <div class="container__left">
+        <div class="content">
+          <h1>Innovating <br />Finance.</h1>
+          <p class="content-p-main">
+            Our cutting-edge platform empowers you to take control of your
+            financial future and develop new opportunities for wealth creation,
+            financial growth, and long-term prosperity.
+          </p>
+          <div class="btns">
+            <button class="login">Be part of the Elite <!--<strong>&rarr;</strong>--></button>
+            <!--<button class="signUp">Sign Up</button>-->
+          </div>
+        </div>
+      </div>
+      <div class="container__right">
+        <img style="width: 513px; height: 322px" src="../assets/images/homePage/card.png" alt="" />
+      </div>
+      <div class="bottom__tracker"></div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="container__left">
+      <div class="content">
+        <h2><span class="lin-grad">Streamline</span> your wealth managment
+          with direct account data access</h2>
+          <ul>
+            <li>Secure access to your account data</li>
+            <li>Comprehensive overview of your financial status</li>
+            <li>Insights for informed decision-making</li>
+          </ul>
+      </div>
+    </div>
+    <div class="container__right">
+      <video src="../assets/images/homePage/users.mp4"  loop autoplay muted   style="height: 650px;"></video>
+    </div>
+    <div class="bottom__tracker"></div>
+  </div>
+
+
+
+  <!--<section class="icon-text-section lock">
+    <div class="icon-text-item">
+      <img src="../assets/images/icon-lock.png" alt="Image 1">
+      <p>Secure Access</p>
+    </div>
+    <div class="icon-text-item">
+      <img src="../assets/images/icon-chart.png"" alt="Image 2">
+      <p>Clear Data</p>
+    </div>
+    <div class="icon-text-item speed">
+      <img src="../assets/images/icon-speed.png"" alt="Image 3">
+      <p>Unseen Effeciency</p>
+    </div>
+  </section>-->
+
+
+  <div class="container">
+    <div class="container__right">
+      <video src="../assets/images/homePage/coins.mp4"  loop autoplay muted   style="height: 650px;"></video>
+    </div>
+    <div class="container__left">
+      <div class="content">
+        <h2> Beggin your trading adventure </h2>
+        <p class="content-p">AI has transformed the landscape of investment with unprecedented advancements. Utilizing sophisticated algorithms and machine learning, it analyzes vast datasets to uncover valuable insights </p>
+
+      </div>
+    </div>
+    
+    <div class="bottom__tracker"></div>
+  </div>
+
+
+  <footer>
+    <div class="footer-left">
+      <img src="../assets/images/homePage/logo.png" alt="Logo">
+    </div>
+    <div class="footer-center">
+      <ul>
+        <li><a href="#" >Help</a></li>
+        <li><a href="#">Agreements</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">API</a></li>
+      </ul>
+    </div>
+    <div class="footer-right">
+      <a href="#"><img src="../assets/images/homePage/meta.png" alt="Facebook"></a>
+      <a href="#"><img src="../assets/images/homePage/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="../assets/images/homePage/instagram.png" alt="Instagram"></a>
+    </div>
+  </footer>
+ 
+  <script>
+
+    window.addEventListener("scroll", function () {
+          // Vérifier la position du défilement
+          const navbar = document.querySelector("nav");
+    
+          if (window.scrollY > 1500) { // Vous pouvez ajuster cette valeur selon votre besoin
+            // Ajouter une classe pour cacher la navbar
+            navbar.classList.add("hidden");
+          } else {
+            // Retirer la classe pour afficher la navbar
+            navbar.classList.remove("hidden");
+          }
+        });
+    
+    
+    
+    
+    
+        document.addEventListener("scroll", () => {
+          var nav = document.querySelector("nav");
+          var navLinks = document.querySelectorAll(".link");
+          var navLogo = document.querySelector(".nav__logo");
+          var navLogoBank = document.querySelector(".light-logo");
+          var navImg = document.getElementById("navImg")
+          if(window.scrollY>170)
+          {
+            navLogo.classList.add("scrolled");
+            nav.classList.add("scrolled");
+            navLogoBank.classList.add("scrolled")
+            navImg.innerHTML='<img src="../assets/images/homePage/icon.png" alt="" >'
+            navLinks.forEach((element) => element.classList.add("scrolled"));
+          }else{
+            
+              navLogo.classList.remove("scrolled");
+              nav.classList.remove("scrolled");
+              navLogoBank.classList.remove("scrolled");
+              navImg.innerHTML='<img style="width:64, height:45" src="../assets/images/homePage/iconWhite0.png" alt="" >'
+              navLinks.forEach((element)=> element.classList.remove("scrolled"));
+          }
+          // Utilisez forEach au lieu de foreach
+            
+          
+          
+        });
+      </script>
+  </body>
+
+{% endblock %}

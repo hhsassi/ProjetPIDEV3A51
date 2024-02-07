@@ -1,0 +1,64 @@
+{% extends '/dashboard/base.html.twig' %}
+{% block content %}
+<table class="table my-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Email</th>
+      <th scope="col">Cin</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Preonm</th>      
+      <th scope="col">Numéro tel </th>
+
+    <th>adresse</th>
+    <th scope="col-2">Actions</th>
+    <th>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#userAddForm">+</button>
+    </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  {% set i=0 %}
+  {% for user in users %}
+  {% set i=i+1 %}
+    <tr>
+      <th scope="row">{{i}}</th>
+      <td>{{user.email}}</td>
+      <td>{{user.cin}} </td>
+      <td>{{user.nom}}</td>
+      
+      <td>{{user.prenom}}</td>
+            <td>{{user.numTel}}</td>
+            <td>{{user.adress}}</td>
+    <td>
+<a href="{{ path('app_gestion_user_edit', {'id': user.id}) }}">Edit</a>
+<a href="{{ path('app_gestion_user_delete', {'id': user.id}) }}">Delete</a>
+
+        
+    </td>
+
+    </tr> 
+    {% endfor %}
+     </tbody>
+</table>
+<div id="userAddForm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+{{ include('./gestion_user/formUser.html.twig', {UserForm: addUserForm,labelButton:"Ajouter"}) }}
+         </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
