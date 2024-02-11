@@ -1,0 +1,34 @@
+{% extends 'dashboard/base.html.twig' %}
+{% block content %}
+
+<h2>Liste de prêts</h2>
+
+<table class="table my-5">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Motif</th>
+      <th scope="col">Salaire</th>
+      <th scope="col">Grantie</th>      
+      <th scope="col">Valeur garantie</th>
+    <th scope="col-2">Actions</th>
+    <th><button class="btn btn-primary" data-toggle="modal" data-target="#userAddForm">+</button></th>
+    </tr>
+    <tbody>
+        {% set i=0 %}
+        {% for pret in pretList %}
+        {% set i=i+1 %}
+        <tr>
+            <th scope="row">{{i}}</th>
+            <td>{{pret.valeur}}</td>
+            <td>{{pret.motif}}</td>
+            <td>{{pret.salaire}}</td>
+            <td>{{pret.garantie}}</td>
+            <td>{{pret.valeurGarantie}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </thead>
+  <tbody>
+
+{% endblock %}

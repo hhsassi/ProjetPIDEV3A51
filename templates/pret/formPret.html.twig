@@ -1,0 +1,44 @@
+  
+  {{ form_errors(UserForm) }}
+            {{ form_start(UserForm) }}
+                <fieldset class="mb-3">
+                <legend>Veuillez saisir vos données</legend>
+                    {{ form_row(UserForm.cin,{
+                        label:"Num Carte d'identie"
+                    }) }}
+                    {{ form_row(UserForm.nom,{
+                        label:"Votre Nom"
+                    }) }}
+                    {{ form_row(UserForm.prenom,{
+                        label:"Votre Prenom"
+                    }) }}
+                    {{ form_row(UserForm.numTel, {
+                        label:"Nuero De Telephone:"
+                    }) }}
+                    {{ form_row(UserForm.adress,{
+                        label:"Votre lieu de residence"
+                    }) }}
+                    {{ form_row(UserForm.dob) }}
+                    {{ form_row(UserForm.email,{
+                        label:"Votre e-mail"
+                    }) }}
+                
+                     {{ form_row(UserForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {% if (UserForm.roles) is defined %}
+                <div class="d-flex flex-column ">
+   {{ form_row(UserForm.roles,{
+                        label:"Role User",
+                        
+                    }) }}
+                    </div>
+
+                    {% endif %}
+                   
+                   
+                </fieldset>
+           
+                <button type="submit" class="btn btn-primary btn-lg my-3">{{labelButton}}</button>
+    {{ form_end(UserForm) }}
+     

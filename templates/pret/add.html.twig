@@ -1,0 +1,7 @@
+
+{% extends './dashboard/base.html.twig' %}
+{% block content %}
+
+{{ include('./pret/formPret.html.twig', {UserForm: editUserForm ,labelButton:"Ajouter" }) }}
+<a href="{{path('app_pret')}}" class="btn btn-warning">Retour</a>
+{% endblock %}
