@@ -22,18 +22,21 @@ class Pret
      *
      * @Assert\Type(type="float")
      */
+    #[Assert\Positive]
     private ?float $valeur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $motif = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive]
     private ?int $salaire = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $garantie = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive]
     private ?float $valeur_garantie = null;
 
     #[ORM\OneToMany(mappedBy: 'pret', targetEntity: Remboursement::class, cascade: ['remove'])]

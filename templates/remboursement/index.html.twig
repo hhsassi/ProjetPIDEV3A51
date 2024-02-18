@@ -38,7 +38,7 @@
                         <td>{{ remboursement.valeur }}</td>
                         <td>{{ remboursement.duree }}</td>
                         <td>{{ remboursement.valeurTranche }}</td>
-                        <td>{{ remboursement.etat ? 'Actif' : 'Non actif' }}</td>
+                        <td>{{ remboursement.etat }}</td>
                         <td>
                             <button class="btn btn-info">
                                 <a style="color:white;" href="{{ path('app_remboursement_show', {'id': remboursement.id}) }}">

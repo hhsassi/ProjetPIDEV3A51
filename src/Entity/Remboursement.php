@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RemboursementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RemboursementRepository::class)]
 class Remboursement
@@ -14,15 +15,24 @@ class Remboursement
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?float $valeur = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?int $duree = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?float $valeur_tranche = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 4,
+        max: 10,
+        minMessage: 'The state must be at least {{ limit }} characters long',
+        maxMessage: 'The state cannot be longer than {{ limit }} characters',
+    )]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'remboursements')]
