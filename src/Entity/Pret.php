@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\PretRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PretRepository::class)]
 class Pret
@@ -14,6 +17,11 @@ class Pret
     private ?int $id = null;
 
     #[ORM\Column]
+    /**
+     * @var $valeur float|null
+     *
+     * @Assert\Type(type="float")
+     */
     private ?float $valeur = null;
 
     #[ORM\Column(length: 255)]
@@ -27,6 +35,14 @@ class Pret
 
     #[ORM\Column(nullable: true)]
     private ?float $valeur_garantie = null;
+
+    #[ORM\OneToMany(mappedBy: 'pret', targetEntity: Remboursement::class, cascade: ['remove'])]
+    private Collection $remboursements;
+
+    public function __construct()
+    {
+        $this->remboursements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,5 +107,40 @@ class Pret
         $this->valeur_garantie = $valeur_garantie;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Remboursement>
+     */
+    public function getRemboursements(): Collection
+    {
+        return $this->remboursements;
+    }
+
+    public function addRemboursement(Remboursement $remboursement): static
+    {
+        if (!$this->remboursements->contains($remboursement)) {
+            $this->remboursements->add($remboursement);
+            $remboursement->setPret($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRemboursement(Remboursement $remboursement): static
+    {
+        if ($this->remboursements->removeElement($remboursement)) {
+            // set the owning side to null (unless already changed)
+            if ($remboursement->getPret() === $this) {
+                $remboursement->setPret(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->motif; // Ou toute autre propriété que vous souhaitez afficher comme chaîne
     }
 }

@@ -1,0 +1,16 @@
+{% extends '/dashboard/base.html.twig' %}
+ {% block title %}Créer un nouveau prêt{% endblock %}
+
+{% block content %}
+<div class="row pt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+    <h2 class="text-black-50-100">Créer un nouveau remboursement</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary btn-lg">Créer le remboursement</button>
+    {{ form_end(form) }}
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

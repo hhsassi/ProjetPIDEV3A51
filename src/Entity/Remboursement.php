@@ -25,6 +25,10 @@ class Remboursement
     #[ORM\Column(length: 255)]
     private ?string $etat = null;
 
+    #[ORM\ManyToOne(inversedBy: 'remboursements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Pret $pret = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +78,18 @@ class Remboursement
     public function setEtat(string $etat): static
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getPret(): ?Pret
+    {
+        return $this->pret;
+    }
+
+    public function setPret(?Pret $pret): static
+    {
+        $this->pret = $pret;
 
         return $this;
     }

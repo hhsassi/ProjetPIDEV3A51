@@ -1,12 +1,12 @@
 {% extends '/dashboard/base.html.twig' %}
 
-{% block title %}Gestion des prêts{% endblock %}
+{% block title %}Gestion des remboursements{% endblock %}
 
 {% block content %}
     <div class="row pt-5">
         <div class="col-md-2 col-lg-2 col-sm-2"></div>
         <div class="col-md-10 col-lg-10 col-sm-10">
-            <h2 class="mb-4 text-black-50-100">Administrer vos prêts !</h2>
+            <h2 class="mb-4 text-black-50-100">Administrer vos remboursements !</h2>
             {% for flashMessage in app.flashes('success') %}
                 <div class="alert alert-success">
                     {{ flashMessage }}
@@ -15,48 +15,47 @@
             <table class="table table-responsive table-striped">
                 <thead>
                 <tr>
-                    <th>#Id</th>
+                    <th>Id</th>
                     <th>Valeur</th>
-                    <th>Motif</th>
-                    <th>Salaire</th>
-                    <th>Garantie</th>
-                    <th>Valeur_garantie</th>
-                    <th scope="col-2">Actions
-                        <button class="btn btn-sm btn-success">
-                            <a style="color:white;" href="{{ path('app_pret_new') }}">
-                                <i class="fas fa-plus fa-2xs"></i> Créer un nouveau prêt
-                            </a>
-                        </button>
+                    <th>Duree</th>
+                    <th>Valeur_tranche</th>
+                    <th>Etat</th>
+                    <th scope="col-4">Actions
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <button class="btn btn-sm btn-success">
+                                <a style="color:white;" href="{{ path('app_remboursement_new') }}">
+                                    <i class="fas fa-plus fa-2xs"></i> Créer une nouvelle remboursement
+                                </a>
+                            </button>
+                        {% endif %}
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for pret in prets %}
+                {% for remboursement in remboursements %}
                     <tr>
-                        <td>{{ pret.id }}</td>
-                        <td>{{ pret.valeur }}</td>
-                        <td>{{ pret.motif }}</td>
-                        <td>{{ pret.salaire }}</td>
-                        <td>{{ pret.garantie ? 'Yes' : 'No' }}</td>
-                        <td>{{ pret.valeurGarantie }}</td>
+                        <td>{{ remboursement.id }}</td>
+                        <td>{{ remboursement.valeur }}</td>
+                        <td>{{ remboursement.duree }}</td>
+                        <td>{{ remboursement.valeurTranche }}</td>
+                        <td>{{ remboursement.etat ? 'Actif' : 'Non actif' }}</td>
                         <td>
                             <button class="btn btn-info">
-                                <a style="color:white;" href="{{ path('app_pret_show', {'id': pret.id}) }}">
+                                <a style="color:white;" href="{{ path('app_remboursement_show', {'id': remboursement.id}) }}">
                                     <i class="fas fa-eye fa-2xs"></i> Voir
                                 </a>
                             </button>
                             {% if is_granted('ROLE_ADMIN') %}
                             <button class="btn btn-warning">
-                                <a style="color:white;" href="{{ path('app_pret_edit', {'id': pret.id}) }}">
+                                <a style="color:white;" href="{{ path('app_remboursement_edit', {'id': remboursement.id}) }}">
                                     <i class="fas fa-edit fa-2xs"></i> Editer
                                 </a>
                             </button>
-
-                            <form style="display:inline-block" id="myForm-{{ loop.index }}" method="POST" action="{{ path
-                                ('app_pret_delete',
-                                {'id': pret
+                            <form style="display:inline-block" id="myForm-{{ loop.index }}" method="POST" action="{{
+                            path('app_remboursement_delete', {'id': remboursement
                             .id}) }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_pret_' ~ pret.id)
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_remboursement_' ~
+                                    remboursement.id)
                                 }}">
                                 <button class="btn btn-danger">
                                     <a class="submitLink" data-form-id="myForm-{{ loop.index }}" style="color:white;"
@@ -76,9 +75,8 @@
                 </tbody>
             </table>
         </div>
+
     </div>
-
-
 {% endblock %}
 {% block javascripts %}
     <script>

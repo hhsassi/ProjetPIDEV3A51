@@ -1,12 +1,12 @@
 {% extends '/dashboard/base.html.twig' %}
 
-{% block title %}Editer un prêt{% endblock %}
+{% block title %}Edit Remboursement{% endblock %}
 
 {% block content %}
     <div class="row pt-5">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <h1>Edit le prêt #{{ pret.id }}</h1>
+            <h1>Editer un remboursement #{{ remboursement.id }}</h1>
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <button class="btn btn-primary">Enregistrer</button>

@@ -1,0 +1,41 @@
+{% extends '/dashboard/base.html.twig' %}
+ {% block title %}Consulter un prêt{% endblock %}
+
+{% block content %}
+<div class="row pt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3 class="text-muted">Détail de remboursement</h3>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ remboursement.id }}</td>
+            </tr>
+            <tr>
+                <th>Valeur</th>
+                <td>{{ remboursement.valeur }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ remboursement.duree }}</td>
+            </tr>
+            <tr>
+                <th>Valeur_tranche</th>
+                <td>{{ remboursement.valeurTranche }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ remboursement.etat }}</td>
+            </tr>
+            <tr>
+                <th>Identificateur de prêt associé</th>
+                <td><a href="{{ path('app_pret_show', {'id': remboursement.pret.id}) }}">{{ remboursement.pret.id }}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="{{ path('app_remboursement_index') }}" class="btn btn-outline-info">retour</a>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

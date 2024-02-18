@@ -1,0 +1,33 @@
+{% extends '/dashboard/base.html.twig' %}
+ {% block title %}Créer un nouveau prêt{% endblock %}
+{% block content %}
+    <div class="row pt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="text-black-50-100">Créer un nouveau prêt !</h2>
+            {{ form_start(form) }}
+            <div>
+                {{ form_row(form.valeur) }}
+            </div>
+            <div>
+                {{ form_row(form.motif) }}
+            </div>
+            <div>
+                {{ form_row(form.salaire) }}
+            </div>
+            <div>
+                {{ form_row(form.garantie) }}
+            </div>
+            <div>
+                {{ form_row(form.valeur_garantie) }}
+            </div>
+
+            <div class="{% if not is_granted('ROLE_ADMIN') %} d-none {% endif %}">
+                {{ form_row(form.remboursements) }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Créer le Prêt</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock %}
