@@ -56,7 +56,6 @@ class CertificationController extends AbstractController
             $badgeFile = $form->get('badgeCertif')->getData();
             if ($badgeFile) {
                 $originalFilename = pathinfo($badgeFile->getClientOriginalName(), PATHINFO_FILENAME);
-              
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$badgeFile->guessExtension();
 
                 try {
@@ -156,4 +155,23 @@ public function show(int $id, EntityManagerInterface $entityManager): Response
     ]);
 
 } 
+
+
+public function validateImage($image)
+{
+    $maxSize = 1024 * 1024; // 1MB en octets
+    $allowedMimeTypes = ['image/png', 'image/jpeg'];
+
+    if ($image->getSize() > $maxSize) {
+        return 'The image cannot be larger than 1MB.';
+    }
+
+    if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
+        return 'Please upload a valid PNG or JPG image.';
+    }
+
+    return true;    
+
+
+}
 }

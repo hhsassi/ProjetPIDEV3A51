@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
 class Certification
 {
@@ -21,12 +20,12 @@ class Certification
     private ?string $nomCertif = null;
 
     #[ORM\Column(length: 255)]
-    /*#[Assert\Image(
+    #[Assert\Image(
         maxSize: '1024k',
         mimeTypes: ['image/png', 'image/jpeg'],
         mimeTypesMessage: 'Please upload a valid PNG or JPG image.',
         maxSizeMessage: 'The image cannot be larger than 1MB.'
-    )]*/
+    )]
     private ?string $badgeCertif = null;
 
     #[ORM\Column(length: 255)]
@@ -57,7 +56,7 @@ class Certification
         return $this->nomCertif;
     }
 
-    public function setNomCertif(string $nomCertif): static
+    public function setNomCertif(?string $nomCertif): static
     {
         $this->nomCertif = $nomCertif;
 
@@ -69,7 +68,7 @@ class Certification
         return $this->badgeCertif;
     }
 
-    public function setBadgeCertif(string $badgeCertif): static
+    public function setBadgeCertif(?string $badgeCertif): static
     {
         $this->badgeCertif = $badgeCertif;
 
@@ -81,7 +80,7 @@ class Certification
         return $this->descriotionCertif;
     }
 
-    public function setDescriotionCertif(string $descriotionCertif): static
+    public function setDescriotionCertif(?string $descriotionCertif): static
     {
         $this->descriotionCertif = $descriotionCertif;
 

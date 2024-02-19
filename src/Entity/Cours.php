@@ -26,6 +26,7 @@ class Cours
     private ?string $niveau = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'title cannot be blank')]
     private ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
@@ -41,7 +42,7 @@ class Cours
         return $this->TitreCours;
     }
 
-    public function setTitreCours(string $TitreCours): static
+    public function setTitreCours(?string $TitreCours): static
     {
         $this->TitreCours = $TitreCours;
 
@@ -53,7 +54,7 @@ class Cours
         return $this->descriptionCours;
     }
 
-    public function setDescriptionCours(string $descriptionCours): static
+    public function setDescriptionCours(?string $descriptionCours): static
     {
         $this->descriptionCours = $descriptionCours;
 
@@ -77,7 +78,7 @@ class Cours
         return $this->file;
     }
 
-    public function setFile(string $file): static
+    public function setFile(?string $file): static
     {
         $this->file = $file;
 
