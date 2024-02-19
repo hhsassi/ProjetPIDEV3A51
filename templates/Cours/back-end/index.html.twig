@@ -1,0 +1,59 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+    <h1>All Courses</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Level</th>
+                <th>certification </th>
+                <th>File</th>
+                <th>Actions</th>
+                <th> <button class="btn btn-primary" onclick="window.location='{{ path('new_cours') }}'"  >+</button></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td>{{ cour.id }}</td>
+                <td>{{ cour.TitreCours }}</td>
+                <td>{{ cour.descriptionCours }}</td>
+                <td>{{ cour.niveau }}</td>
+                <td>
+                    {% if cour.certification %}
+                        {{ cour.certification.nomCertif }} <!-- Displaying Certification name -->
+                    {% else %}
+                        No certification
+                    {% endif %}
+                </td>
+                <td>
+                    {% if cour.file %}
+                        <a href="{{ asset('uploads/cours/' ~ cour.file) }}" target="_blank">View File</a>
+                    {% else %}
+                        No file
+                    {% endif %}
+                </td>
+                <td>
+                <a href="{{ path('show_cours', {'id': cour.id}) }}" class="btn btn-info">Show</a>
+
+                 <a href="{{ path('edit_cours', {'id': cour.id}) }}" class="btn btn-primary">Edit</a>
+                 <form action="{{ path('delete_cours', {'id': cour.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this course?');" style="display: inline-block;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No courses found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   
+{% endblock %}

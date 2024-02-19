@@ -1,0 +1,28 @@
+{% extends '/home_page/index.html.twig' %}
+
+{% block content %}
+    <h1>Course Details</h1>
+
+    <div>
+        <strong>Title:</strong> {{ cours.TitreCours }}
+    </div>
+    <div>
+        <strong>Description:</strong> {{ cours.descriptionCours }}
+    </div>
+    <div>
+        <strong>Level:</strong> {{ cours.niveau }}
+    </div>
+     <div>
+        <strong>certification:</strong> {{ cours.certification.nomCertif }}
+    </div>
+    <div>
+        {% if cours.file %}
+            <strong>File:</strong> <a href="{{ asset('uploads/cours/' ~ cours.file) }}" target="_blank">View File</a>
+        {% else %}
+            <strong>File:</strong> No file
+        {% endif %} 
+    </div>
+
+
+    <a href="{{ path('app_cours') }}">Back to list</a>
+{% endblock %}

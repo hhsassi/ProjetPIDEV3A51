@@ -1,0 +1,20 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+ <section class="container">
+        <div class="row">
+            <div class="col">
+                <h1>new</h1>
+    
+
+   {{ form_start(form) }}
+   <fieldset class="mb-3">
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+</fieldset>
+
+
+    <a href="{{ path('app_certification') }}">back to list</a>
+{% endblock %}
+    

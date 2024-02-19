@@ -6,6 +6,7 @@ use App\Repository\CertificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
 class Certification
@@ -15,24 +16,35 @@ class Certification
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "The name of the certification cannot be blank.")]
     private ?string $nomCertif = null;
 
-    #[ORM\Column]
-    private ?int $niveauCertif = null;
+    #[ORM\Column(length: 255)]
+    /*#[Assert\Image(
+        maxSize: '1024k',
+        mimeTypes: ['image/png', 'image/jpeg'],
+        mimeTypesMessage: 'Please upload a valid PNG or JPG image.',
+        maxSizeMessage: 'The image cannot be larger than 1MB.'
+    )]*/
+    private ?string $badgeCertif = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "The description of the certification cannot be blank.")]
+    private ?string $descriotionCertif = null;
 
     #[ORM\Column]
     private ?int $dureeCertif = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $badgeCertif = null;
+    #[ORM\Column]
+    private ?int $niveauCertif = null;
 
-    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Module::class, orphanRemoval: true)]
-    private Collection $Modules;
+    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Cours::class)]
+    private Collection $cours;
 
     public function __construct()
     {
-        $this->Modules = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,14 +64,26 @@ class Certification
         return $this;
     }
 
-    public function getNiveauCertif(): ?int
+    public function getBadgeCertif(): ?string
     {
-        return $this->niveauCertif;
+        return $this->badgeCertif;
     }
 
-    public function setNiveauCertif(int $niveauCertif): static
+    public function setBadgeCertif(string $badgeCertif): static
     {
-        $this->niveauCertif = $niveauCertif;
+        $this->badgeCertif = $badgeCertif;
+
+        return $this;
+    }
+
+    public function getDescriotionCertif(): ?string
+    {
+        return $this->descriotionCertif;
+    }
+
+    public function setDescriotionCertif(string $descriotionCertif): static
+    {
+        $this->descriotionCertif = $descriotionCertif;
 
         return $this;
     }
@@ -76,42 +100,42 @@ class Certification
         return $this;
     }
 
-    public function getBadgeCertif(): ?string
+    public function getNiveauCertif(): ?int
     {
-        return $this->badgeCertif;
+        return $this->niveauCertif;
     }
 
-    public function setBadgeCertif(string $badgeCertif): static
+    public function setNiveauCertif(int $niveauCertif): static
     {
-        $this->badgeCertif = $badgeCertif;
+        $this->niveauCertif = $niveauCertif;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Module>
+     * @return Collection<int, Cours>
      */
-    public function getModules(): Collection
+    public function getCours(): Collection
     {
-        return $this->Modules;
+        return $this->cours;
     }
 
-    public function addModule(Module $module): static
+    public function addCour(Cours $cour): static
     {
-        if (!$this->Modules->contains($module)) {
-            $this->Modules->add($module);
-            $module->setCertification($this);
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setCertification($this);
         }
 
         return $this;
     }
 
-    public function removeModule(Module $module): static
+    public function removeCour(Cours $cour): static
     {
-        if ($this->Modules->removeElement($module)) {
+        if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($module->getCertification() === $this) {
-                $module->setCertification(null);
+            if ($cour->getCertification() === $this) {
+                $cour->setCertification(null);
             }
         }
 

@@ -1,0 +1,56 @@
+{% extends '/home_page/index.html.twig' %}
+
+{% block content %}
+    <h1>All Courses</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Level</th>
+                <th>certification </th>
+                <th>File</th>
+                <th>Actions</th>
+          
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td>{{ cour.id }}</td>
+                <td>{{ cour.TitreCours }}</td>
+                <td>{{ cour.descriptionCours }}</td>
+                <td>{{ cour.niveau }}</td>
+                <td>
+                    {% if cour.certification %}
+                        {{ cour.certification.nomCertif }} <!-- Displaying Certification name -->
+                    {% else %}
+                        No certification
+                    {% endif %}
+                </td>
+                <td>
+                    {% if cour.file %}
+                        <a href="{{ asset('uploads/cours/' ~ cour.file) }}" target="_blank">View File</a>
+                    {% else %}
+                        No file
+                    {% endif %}
+                </td>
+                <td>
+                <a href="{{ path('show_front_cours', {'id': cour.id}) }}" class="btn btn-info">Show</a>
+
+                
+                
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No courses found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   
+{% endblock %}

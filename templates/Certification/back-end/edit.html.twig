@@ -1,0 +1,38 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+    <h1>Edit Certification</h1>
+    
+    {# Display current badge if it exists #}
+    {% if certification.badgeCertif %}
+        <div>
+            <h3>Current Badge:</h3>
+            <img src="{{ asset('uploads/certifications/' ~ certification.badgeCertif) }}" alt="Badge Image" style="max-width: 100px; height: auto;">
+        </div>
+    {% endif %}
+    
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    {# Display global form errors #}
+    {% if form.vars.errors|length > 0 %}
+        <div class="alert alert-danger" role="alert">
+            <strong>There were some problems with your submission:</strong>
+            <ul>
+                {% for error in form.vars.errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    
+    {# Display errors for each form field #}
+    {% for field in form %}
+        {{ form_row(field) }}
+        {{ form_errors(field) }} {# Correct way to display field-specific errors #}
+    {% endfor %}
+    
+    <button class="btn btn-primary">Update</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_certification') }}" class="btn btn-secondary">Back to list</a>
+{% endblock %}
