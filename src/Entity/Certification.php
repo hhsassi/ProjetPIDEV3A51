@@ -41,6 +41,29 @@ class Certification
     #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\ManyToMany(targetEntity: Certification::class, inversedBy: 'users')]
+    private Collection $certifications;
+
+    public function getCertifications(): Collection
+    {
+        return $this->certifications;
+    }
+
+    public function addCertification(Certification $certification): self
+    {
+        if (!$this->certifications->contains($certification)) {
+            $this->certifications[] = $certification;
+        }
+
+        return $this;
+    }
+
+    public function removeCertification(Certification $certification): self
+    {
+        $this->certifications->removeElement($certification);
+        
+        return $this;
+    }
     public function __construct()
     {
         $this->cours = new ArrayCollection();

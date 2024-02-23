@@ -10,6 +10,8 @@ use Symfony\Component\Mime\Message;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -68,6 +70,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Dob cannot be blank')]
     #[Assert\Type(type: '\DateTimeInterface', message: 'Dob must be a valid date')]
     private ?\DateTimeInterface $dob = null;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'certifications')]
+private Collection $users;
+
+public function __construct()
+{
+    // ... constructeur existant
+    $this->users = new ArrayCollection();
+}
+
+/**
+ * @return Collection|User[]
+ */
+public function getUsers(): Collection
+{
+    return $this->users;
+}
 
     public function getId(): ?int
     {
