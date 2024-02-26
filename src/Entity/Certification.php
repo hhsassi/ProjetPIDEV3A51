@@ -41,32 +41,13 @@ class Certification
     #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Cours::class)]
     private Collection $cours;
 
-    #[ORM\ManyToMany(targetEntity: Certification::class, inversedBy: 'users')]
-    private Collection $certifications;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'certifications')]
+    private Collection $users;
 
-    public function getCertifications(): Collection
-    {
-        return $this->certifications;
-    }
-
-    public function addCertification(Certification $certification): self
-    {
-        if (!$this->certifications->contains($certification)) {
-            $this->certifications[] = $certification;
-        }
-
-        return $this;
-    }
-
-    public function removeCertification(Certification $certification): self
-    {
-        $this->certifications->removeElement($certification);
-        
-        return $this;
-    }
     public function __construct()
     {
         $this->cours = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +141,30 @@ class Certification
                 $cour->setCertification(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }

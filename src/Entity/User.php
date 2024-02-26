@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -10,8 +12,6 @@ use Symfony\Component\Mime\Message;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -70,22 +70,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Dob cannot be blank')]
     #[Assert\Type(type: '\DateTimeInterface', message: 'Dob must be a valid date')]
     private ?\DateTimeInterface $dob = null;
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'certifications')]
-private Collection $users;
 
-public function __construct()
-{
-    // ... constructeur existant
-    $this->users = new ArrayCollection();
-}
+    #[ORM\ManyToMany(targetEntity: Certification::class, mappedBy: 'users')]
+    private Collection $certifications;
 
-/**
- * @return Collection|User[]
- */
-public function getUsers(): Collection
-{
-    return $this->users;
-}
+    public function __construct()
+    {
+        $this->certifications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -245,6 +237,33 @@ public function getUsers(): Collection
     public function setDob(\DateTimeInterface $dob): static
     {
         $this->dob = $dob;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Certification>
+     */
+    public function getCertifications(): Collection
+    {
+        return $this->certifications;
+    }
+
+    public function addCertification(Certification $certification): static
+    {
+        if (!$this->certifications->contains($certification)) {
+            $this->certifications->add($certification);
+            $certification->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCertification(Certification $certification): static
+    {
+        if ($this->certifications->removeElement($certification)) {
+            $certification->removeUser($this);
+        }
 
         return $this;
     }
