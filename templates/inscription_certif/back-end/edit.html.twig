@@ -1,0 +1,14 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <h1>Modifier Inscription</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('inscription_certif_index') }}">Retour à la liste</a>
+</div>
+{% endblock %}

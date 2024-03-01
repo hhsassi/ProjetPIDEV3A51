@@ -26,7 +26,6 @@ class Cours
     private ?string $niveau = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'title cannot be blank')]
     private ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]

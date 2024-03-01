@@ -28,7 +28,7 @@
                 <a class="nav-link" href="{{path("user_profile")}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Profile</span></a>
-                      <li class="nav-item">
+                    <li class="nav-item">  <!-- tout ca va etre en partie admin pour l'integration tache certif -->
                     <a class="nav-link" href="{{path("app_certification")}}">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span> Gérer Les Certification </span></a>
@@ -38,6 +38,11 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span> Gérer Les Cours </span></a>
                 </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{{path("inscription_certif_index")}}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span> Gérer Les inscriptionCertif </span></a>
+                </li                                         ><!-- jusqu'a ici  -->
             
             </li>
             {% if is_granted('ROLE_ADMIN') %}
@@ -47,11 +52,8 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span> Gérer Les Utilisateurs </span></a>
                 </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{path("app_certification")}}">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span> Gérer Les Certification </span></a>
-                </li>
+
+                
             
             {% endif %}
 

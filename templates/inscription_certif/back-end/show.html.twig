@@ -1,0 +1,32 @@
+{# templates/inscription_certif/show.html.twig #}
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <h1>Détails de l'Inscription</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Utilisateur</h5>
+            <p class="card-text">Email: {{ inscriptionCertif.user.email }}</p>
+            <p class="card-text">Nom: {{ inscriptionCertif.user.nom }}</p>
+            <p class="card-text">Prénom: {{ inscriptionCertif.user.prenom }}</p>
+            <p class="card-text">CIN: {{ inscriptionCertif.user.cin }}</p>
+            <p class="card-text">Adresse: {{ inscriptionCertif.user.adress }}</p>
+            <p class="card-text">Numéro de Téléphone: {{ inscriptionCertif.user.numTel }}</p>
+            <p class="card-text">Date de Naissance: {{ inscriptionCertif.user.dob|date('d-m-Y') }}</p>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Certification</h5>
+            <p class="card-text">Nom: {{ inscriptionCertif.certification.nomCertif }}</p>
+            <p class="card-text">Description: {{ inscriptionCertif.certification.descriotionCertif }}</p>
+            <p class="card-text">Durée: {{ inscriptionCertif.certification.dureeCertif }} heures</p>
+            <p class="card-text">Niveau: {{ inscriptionCertif.certification.niveauCertif }}</p>
+            {# Assurez-vous que le chemin vers l'image badgeCertif est correct #}
+        <img src="{{ asset('uploads/certifications/' ~ inscriptionCertif.certification.badgeCertif) }}" alt="Badge" style="width: 100px; height: auto;">
+          
+    </div>
+    <a href="{{ path('inscription_certif_index') }}" class="btn btn-primary mt-3">Retour à la liste</a>
+</div>
+{% endblock %}

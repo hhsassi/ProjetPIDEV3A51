@@ -29,10 +29,11 @@ Pour installer et exécuter Artemis Bank sur votre système, suivez les étapes 
 1. Clonez ce dépôt sur votre machine locale.
 2. Assurez-vous d'avoir PHP et Composer installés.
 3. Installez les dépendances en exécutant `composer install`.
-4. Configurez votre base de données dans le fichier `.env`.
-5. Exécutez les migrations avec la commande `php bin/console doctrine:migrations:migrate`.
-6. Démarrez le serveur Symfony avec `symfony server:start`.
-7. Accédez à l'application dans votre navigateur à l'adresse fournie par Symfony.
+4. Copiez le fichier `.env.example` et renommez-le en `.env`.
+5. Configurez votre base de données dans le fichier `.env`.
+6. Exécutez les migrations avec la commande `php bin/console doctrine:migrations:migrate`.
+7. Démarrez le serveur Symfony avec `symfony server:start`.
+8. Accédez à l'application dans votre navigateur à l'adresse fournie par Symfony.
 
 ## Contribution
 

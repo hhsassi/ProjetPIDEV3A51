@@ -1,6 +1,12 @@
 
 {% extends './dashboard/base.html.twig' %}
 {% block content %}
+  
+  {% for flashMessage in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
 
 {{ include('./gestion_user/formUser.html.twig', {UserForm: editUserForm ,labelButton:"Modifier" }) }}
 <a href="{{path('app_gestion_user')}}" class="btn btn-warning">Return</a>

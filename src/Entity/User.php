@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface,TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: 'Email cannot be blank')]
-    #[Assert\Email(message: 'Invalid email format')]
+    #[Assert\Email(message: 'Invalid email format, must be : email@service.com')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -39,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8, max: 8, exactMessage: 'Password must be exactly {{ limit }} characters long')]
     private ?string $password = null;
 
-    #[ORM\Column(length: 8)]
+    #[ORM\Column(length: 8, unique: true )]
     #[Assert\NotBlank(message: 'Cin cannot be blank')]
     #[Assert\Length(min: 8, max: 8, exactMessage: 'Cin must be exactly {{ limit }} characters long')]
     #[Assert\Type(type: 'string', message: 'Cin must be a string')]
@@ -47,22 +48,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank(message: 'Nom cannot be blank')]
-    #[Assert\Length(min: 2, max: 20, minMessage: 'Nom must be at least {{ limit }} characters long', maxMessage: 'Nom cannot be longer than {{ limit }} characters')]
+    #[Assert\Length(min: 3, max: 20, minMessage: 'Nom must be at least {{ limit }} characters long', maxMessage: 'Nom cannot be longer than {{ limit }} characters')]
     #[Assert\Type(type: 'string', message: 'Nom must be a string')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+$/', message: 'Nom must contain only letters')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank(message: 'Prenom cannot be blank')]
-    #[Assert\Length(min: 2, max: 20, minMessage: 'Prenom must be at least {{ limit }} characters long', maxMessage: 'Prenom cannot be longer than {{ limit }} characters')]
+    #[Assert\Length(min: 3, max: 20, minMessage: 'Prenom must be at least {{ limit }} characters long', maxMessage: 'Prenom cannot be longer than {{ limit }} characters')]
     #[Assert\Type(type: 'string', message: 'Prenom must be a string')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+$/', message: 'Nom must contain only letters')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'NumTel cannot be blank')]
     #[Assert\Regex(pattern: '/^\d+$/', message: 'NumTel must contain only numbers')]
+    #[Assert\Length(min: 8, max: 8, exactMessage: 'NumTel must be exactly composed by {{ limit }} numbers')]
+
     private ?string $numTel = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\Length(min: 5, max: 20, minMessage: 'Adresse must be at least {{ limit }} characters long', maxMessage: 'Prenom cannot be longer than {{ limit }} characters')]
     #[Assert\NotBlank(message: 'Adress cannot be blank')]
     private ?string $adress = null;
 
@@ -71,14 +77,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Type(type: '\DateTimeInterface', message: 'Dob must be a valid date')]
     private ?\DateTimeInterface $dob = null;
 
-    #[ORM\ManyToMany(targetEntity: Certification::class, mappedBy: 'users')]
-    private Collection $certifications;
+    #[ORM\Column(type:"string", nullable: true)]
+    private ?string $authCode = null;
+
+    #[ORM\Column(type: "boolean")]
+    private ?bool $is_verified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: InscriptionCertif::class)]
+    private Collection $inscriptionCertifs;
 
     public function __construct()
     {
-        $this->certifications = new ArrayCollection();
+        $this->inscriptionCertifs = new ArrayCollection();
     }
 
+   
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -241,28 +255,83 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Certification>
-     */
-    public function getCertifications(): Collection
+    public function getAuthCode(): ?string
     {
-        return $this->certifications;
+        return $this->authCode;
     }
 
-    public function addCertification(Certification $certification): static
+    public function setAuthCode(?string $authCode): static
     {
-        if (!$this->certifications->contains($certification)) {
-            $this->certifications->add($certification);
-            $certification->addUser($this);
+        $this->authCode = $authCode;
+
+        return $this;
+    }
+
+    public function isEmailAuthEnabled(): bool
+    {
+        return true; // This can be a persisted field to switch email code authentication on/off
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string
+    {
+        if (null === $this->authCode) {
+            throw new \LogicException('The email authentication code was not set');
+        }
+
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->authCode = $authCode;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): static
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
+    public function __toString()// Choisissez la propriété qui représente le mieux cet objet, par exemple :
+    {
+          return $this->email;
+    }
+
+    /**
+     * @return Collection<int, InscriptionCertif>
+     */
+    public function getInscriptionCertifs(): Collection
+    {
+        return $this->inscriptionCertifs;
+    }
+
+    public function addInscriptionCertif(InscriptionCertif $inscriptionCertif): static
+    {
+        if (!$this->inscriptionCertifs->contains($inscriptionCertif)) {
+            $this->inscriptionCertifs->add($inscriptionCertif);
+            $inscriptionCertif->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCertification(Certification $certification): static
+    public function removeInscriptionCertif(InscriptionCertif $inscriptionCertif): static
     {
-        if ($this->certifications->removeElement($certification)) {
-            $certification->removeUser($this);
+        if ($this->inscriptionCertifs->removeElement($inscriptionCertif)) {
+            // set the owning side to null (unless already changed)
+            if ($inscriptionCertif->getUser() === $this) {
+                $inscriptionCertif->setUser(null);
+            }
         }
 
         return $this;

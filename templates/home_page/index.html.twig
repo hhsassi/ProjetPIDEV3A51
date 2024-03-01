@@ -14,8 +14,9 @@
       </div>
       <ul class="nav__links">
         <li class="link">Home</li>
-        <li class="link" > <a class="nav-link" href="{{path("front_certification")}}"> Certfication </a> </li>
+               <li class="link" > <a class="nav-link" href="{{path("front_certification")}}"> Certfication </a> </li>
          <li class="link" > <a class="nav-link" href="{{path("front_cours")}}"> Cours </a> </li>
+         <li class="link" > <a class="nav-link" href="{{path("inscription_certif_indexFront")}}"> Cours inscris </a> </li>
         <li class="link">About Us</li>
         <li class="link">Contact Us</li>
           {% if  app.user %}
@@ -30,8 +31,9 @@
           {% endif %}
       </ul>
     </nav></header>
-  
- <div class="main"  >
+    
+ <div class="main"   >
+ <!--<img src="../assets/images/homePage/bg.jpg">-->
     <div class="container">
       <div class="container__left">
         <div class="content">
@@ -106,7 +108,7 @@
     <div class="bottom__tracker"></div>
   </div>
 
-
+{% endblock %}
   <footer>
     <div class="footer-left">
       <img src="../assets/images/homePage/logo.png" alt="Logo">
@@ -126,7 +128,7 @@
       <a href="#"><img src="../assets/images/homePage/instagram.png" alt="Instagram"></a>
     </div>
   </footer>
- {% endblock %}
+ 
   <script>
 
     window.addEventListener("scroll", function () {

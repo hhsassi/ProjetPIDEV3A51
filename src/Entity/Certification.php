@@ -20,12 +20,7 @@ class Certification
     private ?string $nomCertif = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Image(
-        maxSize: '1024k',
-        mimeTypes: ['image/png', 'image/jpeg'],
-        mimeTypesMessage: 'Please upload a valid PNG or JPG image.',
-        maxSizeMessage: 'The image cannot be larger than 1MB.'
-    )]
+    
     private ?string $badgeCertif = null;
 
     #[ORM\Column(length: 255)]
@@ -38,17 +33,17 @@ class Certification
     #[ORM\Column]
     private ?int $niveauCertif = null;
 
-    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Cours::class , cascade: ['remove'])]
     private Collection $cours;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'certifications')]
-    private Collection $users;
+    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: InscriptionCertif::class)]
+    private Collection $inscriptionCertifs;
 
     public function __construct()
     {
-        $this->cours = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->inscriptionCertifs = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -146,26 +141,38 @@ class Certification
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, InscriptionCertif>
      */
-    public function getUsers(): Collection
+    public function getInscriptionCertifs(): Collection
     {
-        return $this->users;
+        return $this->inscriptionCertifs;
     }
 
-    public function addUser(User $user): static
+    public function addInscriptionCertif(InscriptionCertif $inscriptionCertif): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
+        if (!$this->inscriptionCertifs->contains($inscriptionCertif)) {
+            $this->inscriptionCertifs->add($inscriptionCertif);
+            $inscriptionCertif->setCertification($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeInscriptionCertif(InscriptionCertif $inscriptionCertif): static
     {
-        $this->users->removeElement($user);
+        if ($this->inscriptionCertifs->removeElement($inscriptionCertif)) {
+            // set the owning side to null (unless already changed)
+            if ($inscriptionCertif->getCertification() === $this) {
+                $inscriptionCertif->setCertification(null);
+            }
+        }
 
         return $this;
     }
+    public function __toString()
+    {
+        // Choisissez la propriété qui représente le mieux cet objet, par exemple :
+        return $this->nomCertif;
+    }
+    
 }

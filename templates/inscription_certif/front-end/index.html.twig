@@ -1,0 +1,39 @@
+{% extends '/home_page/index.html.twig' %}
+
+{% block content %}
+<div>
+<div class="container mt-5">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <h2 class="mb-4">Mes Inscriptions aux Certifications</h2>
+
+    {% if inscription_certif is empty %}
+        <div class="alert alert-info" role="alert">
+            Vous n'êtes inscrit à aucune certification pour le moment.
+        </div>
+    {% else %}
+        <div class="row">
+            {% for inscription in inscription_certif %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('uploads/certifications/' ~ inscription.certification.badgeCertif) }}" class="card-img-top" alt="Badge de Certification">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ inscription.certification.nomCertif }}</h5>
+                            <p class="card-text">{{ inscription.certification.descriotionCertif }}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Durée : {{ inscription.certification.dureeCertif }} jours</li>
+                                <li class="list-group-item">Niveau : {{ inscription.certification.niveauCertif }}</li>
+                              
+                                <!-- Ajoutez plus de détails ici si nécessaire -->
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Inscrit par {{ inscription.user.prenom }} {{ inscription.user.nom }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+</div> 
+{% endblock %}
