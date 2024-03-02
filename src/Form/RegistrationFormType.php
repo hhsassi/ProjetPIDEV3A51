@@ -11,14 +11,27 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Doctrine\ORM\EntityManagerInterface; 
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class RegistrationFormType extends AbstractType
 {
+    private $entityManager;
+ 
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+ 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        
         $builder
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'form-control', 'pattern' => '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'],
@@ -29,9 +42,14 @@ class RegistrationFormType extends AbstractType
             ->add('prenom', TextType::class, [
                 'attr' => ['class' => 'form-control', 'pattern' => '[^0-9]+' ],
             ])
-            ->add("cin", TextType::class, [
-                'attr' => ['class' => 'form-control', 'pattern' => '[0-9]+' ],
+            ->add('cin', TextType::class, [
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Callback([$this, 'validateCin']),
+                ],
             ])
+    
+
             ->add("adress", TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
@@ -49,10 +67,10 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'label' => "En m'inscrivant a Artemis J'accepte ..."
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'mapped' => false,
+            ->add('password', PasswordType::class, [
+                
                 'attr' => [
-                    'autocomplete' => 'new-password',
+                   
                     'class' => 'form-control',
                 ],
             ]);
@@ -64,4 +82,16 @@ class RegistrationFormType extends AbstractType
             'data_class' => User::class,
         ]);
     }
+
+    public function validateCin($value, ExecutionContextInterface $context)
+    {
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['cin' => $value]);
+
+        if ($existingUser) {
+            $context->buildViolation('This cin is already in use.')
+                ->atPath('cin')
+                ->addViolation();
+        }
+    }
+
 }

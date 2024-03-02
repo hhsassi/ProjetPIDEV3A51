@@ -27,7 +27,7 @@ class GestionUserController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
@@ -49,34 +49,38 @@ class GestionUserController extends AbstractController
 
 
     #[Route('/gestion/user/edit/{id}', name: 'app_gestion_user_edit')]
-    public function edit(UserRepository $userRepository,Request $request,UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager,$id): Response
-    {
-        $user = $userRepository->find($id);
+public function edit(UserRepository $userRepository, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, $id): Response
+{
+    $user = $userRepository->find($id);
 
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
+    $form = $this->createForm(UserFormType::class, $user);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $submittedPassword = $form->get('password')->getData();
+
+        if ($userPasswordHasher->isPasswordValid($user, $submittedPassword)) {
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $submittedPassword
                 )
             );
 
             $entityManager->flush();
             return $this->redirectToRoute('app_gestion_user');
-      
-            
+        } else {
+            $this->addFlash('error', 'Incorrect password. Please enter the correct password to proceed with the update.');
+
         }
-
-        return $this->render('gestion_user/edit.html.twig', [
-            'editUserForm' => $form->createView(),
-
-
-            
-        ]);
     }
+
+    return $this->render('gestion_user/edit.html.twig', [
+        'editUserForm' => $form->createView(),
+    ]);
+}
+
     #[Route('/gestion/user/delete/{id}', name: 'app_gestion_user_delete')]
     public function delete(UserRepository $userRepository,EntityManagerInterface $entityManager,$id): Response
     {
@@ -103,7 +107,7 @@ class GestionUserController extends AbstractController
            $user->setPassword(
                $userPasswordHasher->hashPassword(
                    $user,
-                   $form->get('plainPassword')->getData()
+                   $form->get('password')->getData()
                )
            );
 

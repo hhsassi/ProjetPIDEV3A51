@@ -23,7 +23,10 @@ security:
         path: app_logout
         # where to redirect after logout
         target: app_home_page
-
+      two_factor:
+                auth_form_path: /2fa                  # Path or route name of the two-factor form
+                check_path: /2fa_check  
+                #trusted_parameter_name: _trusted
       remember_me:
         secret: "%kernel.secret%"
         lifetime: 604800

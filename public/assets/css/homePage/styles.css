@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #53bffe;
+  --primary-color: #f0eaea;
   --text-dark: #4400ff;
   --text-light: #ffffff33;
   --extra-light: #f3f4f6;
@@ -17,6 +17,7 @@
 
 a {
   text-decoration: none;
+  
 }
 
 input::placeholder {
@@ -24,19 +25,16 @@ input::placeholder {
 }
 
 body {
-  font-family:"Mundial", "Open Sans", sans-serif;
+  font-family: "Mundial", "Open Sans", sans-serif;
   min-height: 100vh;
-  /*background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-    url("../../assets/images/images/bg.jpg");*/
+  
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-
-
 nav {
-  position:fixed;
+  position: fixed;
   top: 0;
   /*left: 0%;
   transform: translateX(6%);*/
@@ -49,26 +47,19 @@ nav {
   align-items: center;
   justify-content: space-between;
   z-index: 1;
-  
 }
-nav.hidden
-{
+nav.hidden {
   display: none;
 }
 
-
 nav.scrolled {
   background-color: white;
-  opacity:0.98;
+  opacity: 0.98;
   color: black;
   transition: 0.7s ease-in-out;
 
   box-shadow: 0 4px 8px -2px #00000045;
-
-
 }
-
-
 
 .link.scrolled {
   list-style: none;
@@ -79,8 +70,7 @@ nav.scrolled {
   gap: auto;
 }
 
-.link.login
-{
+.link.login {
   list-style: none;
   display: flex;
   align-items: center;
@@ -93,10 +83,8 @@ nav.scrolled {
   padding-bottom: 0.5em;
   padding-top: 0.5em;
   border: 0px;
-  
 }
-.link.login:hover
-{
+.link.login:hover {
   list-style: none;
   display: flex;
   align-items: center;
@@ -108,11 +96,9 @@ nav.scrolled {
   padding-left: 0.7em;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
-  border :none
-  
+  border: none;
 }
-.link.login.scrolled
-{
+.link.login.scrolled {
   list-style: none;
   display: flex;
   align-items: center;
@@ -124,7 +110,6 @@ nav.scrolled {
   padding-left: 0.7em;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
-  
 }
 
 /*.link.login.scrolled:hover
@@ -135,17 +120,11 @@ nav.scrolled {
   color: #000000;
 }*/
 
-
-
-
-
 .nav__links .link.scrolled:hover {
   /*color: var(--primary-color);*/
-  border-bottom : solid 3.5px rgb(0, 0, 0);
+  border-bottom: solid 3.5px rgb(0, 0, 0);
   transition: 0.1s ease-in-out;
-
 }
-
 
 .nav__logo {
   display: flex;
@@ -154,8 +133,9 @@ nav.scrolled {
 .nav__logo.scrolled a {
   font-size: 1.79rem;
   font-weight: 600;
-  color: black
-  
+  color: black;
+  text-decoration: none; /* Remove underline */
+  color: white;
 }
 
 .nav__logo a {
@@ -163,20 +143,20 @@ nav.scrolled {
   font-weight: 600;
   color: var(--extra-light);
   flex-shrink: 1;
+  text-decoration: none; /* Remove underline */
+  color: rgb(255, 255, 255);
 }
-.light-logo
-{
+.light-logo {
   font-size: 1.79rem;
   font-weight: 200;
   color: var(--extra-light);
   flex-shrink: 1;
 }
 
-
-.light-logo.scrolled{
+.light-logo.scrolled {
   font-size: 1.79rem;
   font-weight: 200;
-  color: black
+  color: black;
 }
 
 .nav__links {
@@ -185,9 +165,6 @@ nav.scrolled {
   align-items: center;
   gap: 3rem;
 }
-
-
-
 
 .nav__links li {
   font-size: 1.2rem;
@@ -199,7 +176,7 @@ nav.scrolled {
 
 .nav__links .link:hover {
   /*color: var(--primary-color);*/
-  border-bottom : solid 3.5px white;
+  border-bottom: solid 3.5px white;
 }
 
 .search__box {
@@ -220,9 +197,9 @@ nav.scrolled {
   cursor: pointer;
 }
 
-.main{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), 
-  url('{{ asset("images/homePage/bg.jpg") }}');
+.main {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    url("../../images/homePage/bg.jpg");
 
   background-position: center center;
   background-size: cover;
@@ -230,10 +207,9 @@ nav.scrolled {
   box-shadow: 0 4px 8px -2px #2b4eff45;
 }
 
-
-.services{
+.services {
   background-color: rgb(255, 255, 255);
-  background-image: linear-gradient(rgba(146, 153, 255, 0.25), rgb(255, 0, 0)),;
+  background-image: linear-gradient(rgba(146, 153, 255, 0.25), rgb(255, 0, 0));
 }
 
 .container {
@@ -275,7 +251,7 @@ nav.scrolled {
   font-size: 7rem;
   line-height: 7rem;
   color: var(--extra-light);
-  font-weight:650;
+  font-weight: 650;
 }
 
 .content h2 {
@@ -283,15 +259,14 @@ nav.scrolled {
   font-size: 4rem;
   line-height: 4rem;
   color: black;
-  font-weight:450;
+  font-weight: 450;
 }
-
 
 .content-p-main {
   color: var(--extra-light);
   margin: 0.5em;
   font-weight: 350;
-  line-height: 1.20em;
+  line-height: 1.2em;
 }
 
 .btns {
@@ -314,12 +289,12 @@ nav.scrolled {
 
 button.login {
   background-color: var(--extra-light);
-  color: var(--text-dark);
+  color: black
 }
-button.login:hover{
+button.login:hover {
   background-color: #011952;
-  color: var(--extra-light);
-  border-color:#011952;
+  color: white;
+  border-color: #011952;
 }
 
 button.our__blogs:hover {
@@ -413,8 +388,7 @@ form button {
 }
 
 /* partie services */
-.container-services
-{
+.container-services {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -422,43 +396,35 @@ form button {
   max-width: var(--max-width);
   margin: auto;
   margin-top: 0;
-  /*padding: 2rem; *//* Remove top padding, keep the padding on sides */
+  /*padding: 2rem; */ /* Remove top padding, keep the padding on sides */
   position: static;
 }
 
-
-
-
-
-.lin-grad{
-  background: linear-gradient(91deg, #30F 65.62%, #25677b 97.91%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-text-align: center;
-font-family:  "Mundial";
-font-size: 3.5rem;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.lin-grad {
+  background: linear-gradient(91deg, #30f 65.62%, #25677b 97.91%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: "Mundial";
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-
-.lin-grad-ai{
-  background: linear-gradient(91deg, #30F 65.62%, #25677b 97.91%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-text-align: center;
-font-family:  "Mundial";
-font-size: 4.5rem;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+.lin-grad-ai {
+  background: linear-gradient(91deg, #30f 65.62%, #25677b 97.91%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: "Mundial";
+  font-size: 4.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
-
-
-
 
 /*-*/
 .container__left .content ul {
@@ -476,8 +442,8 @@ line-height: normal;
 }
 
 .container__left .content li::before {
-  content: "\2022"; 
-  color: black; 
+  content: "\2022";
+  color: black;
   font-size: 1.5rem;
   position: absolute;
   left: 0;
@@ -486,17 +452,8 @@ line-height: normal;
   margin-right: 1rem;
 }
 
-
-
-
-
-
-
-
-
-
 .lin-grad-ai {
-  background: linear-gradient(91deg, #30F 65.62%, #25677b 97.91%);
+  background: linear-gradient(91deg, #30f 65.62%, #25677b 97.91%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -508,8 +465,7 @@ line-height: normal;
   line-height: normal;
 }
 
-.content-p
-{
+.content-p {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 0.5rem;
@@ -535,13 +491,11 @@ footer {
   margin-left: 1.2em; /* Espace entre les icônes de réseaux sociaux */
 }
 
-
 .footer-right img {
   height: 20px; /* Ajustez la taille des icônes selon vos besoins */
 }
 
-.footer-center a
-{
+.footer-center a {
   text-decoration: none;
   color: white;
   font-weight: 250;
@@ -554,39 +508,28 @@ footer {
   font-weight: 250;
   justify-content: space-between;
   align-items: center;
-  gap:0.9em
-
+  gap: 0.9em;
 }
 
 .footer-center li {
   margin-bottom: 10px;
 }
 
-
-
-
-
-
 .bottom__tracker span:nth-child(2) {
   background-color: var(--extra-light);
 }
 @media only screen and (max-width: 848px) {
-
-  
-
-
   .container {
     padding: auto;
     flex-direction: column;
-    align-items: center; 
-    
+    align-items: center;
   }
 
   .container__left {
-    margin-right: 0; 
+    margin-right: 0;
   }
 
   .container__right {
-    margin: 1rem 0 0; 
+    margin: 1rem 0 0;
   }
 }
