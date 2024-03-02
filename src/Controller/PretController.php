@@ -27,6 +27,21 @@ class PretController extends AbstractController
         ]);
     }
 
+    
+    #[Route('/single', name: 'app_pret_single', methods: ['GET'])]
+    public function single(PretRepository $pretRepository): Response
+    {
+        $user = $this->getUser();
+        $list = $pretRepository->
+       if (! in_array('ROLE_ADMIN', $user->getRoles()) {
+
+       }
+
+        return $this->render('pret/single.html.twig', [
+            'prets' => $pretRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_pret_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

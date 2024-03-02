@@ -15,7 +15,7 @@
       <ul class="nav__links">
         <li class="link">Home</li>
           {% if  app.user %}
-            <li class="link"  ><a href="{{ path('app_pret_single') }}"> Voir mes prêts </a> </li>
+            <li class="link"  ><a href="{{ path('app_pret_new') }}"> Voir mes prêts </a> </li>
             <li class="link"  ><a href="{{ path('app_pret_new') }}"> Demande d'un prêt </a> </li>
             <li class="link login"  ><a href="{{ path('user_profile') }}"> Compte </a> </li>
                   {% if is_granted('ROLE_ADMIN') %}
@@ -29,29 +29,6 @@
       </ul>
     </nav></header>
     
- <div class="main"  >
-    <div class="container">
-      <div class="container__left">
-        <div class="content">
-          <h1>Innovating <br />Finance.</h1>
-          <p class="content-p-main">
-            Our cutting-edge platform empowers you to take control of your
-            financial future and develop new opportunities for wealth creation,
-            financial growth, and long-term prosperity.
-          </p>
-          <div class="btns">
-            <button class="login">Be part of the Elite <!--<strong>&rarr;</strong>--></button>
-            <!--<button class="signUp">Sign Up</button>-->
-          </div>
-        </div>
-      </div>
-      <div class="container__right">
-        <img style="width: 513px; height: 322px" src="../assets/images/homePage/card.png" alt="" />
-      </div>
-      <div class="bottom__tracker"></div>
-    </div>
-  </div>
-
 
   <div class="container">
     <div class="container__left">
@@ -72,21 +49,6 @@
   </div>
 
 
-
-  <!--<section class="icon-text-section lock">
-    <div class="icon-text-item">
-      <img src="../assets/images/icon-lock.png" alt="Image 1">
-      <p>Secure Access</p>
-    </div>
-    <div class="icon-text-item">
-      <img src="../assets/images/icon-chart.png"" alt="Image 2">
-      <p>Clear Data</p>
-    </div>
-    <div class="icon-text-item speed">
-      <img src="../assets/images/icon-speed.png"" alt="Image 3">
-      <p>Unseen Effeciency</p>
-    </div>
-  </section>-->
 
 
   <div class="container">

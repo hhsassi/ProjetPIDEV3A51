@@ -55,11 +55,11 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
              {% if not is_granted('ROLE_ADMIN') %}
-         <li class="nav-item">
+         {# <li class="nav-item">
              <a class="nav-link" href="{{path("app_pret_index")}}">
                  <i class="fas fa-address-card"></i>
                  <span>Voir mes prêts</span></a>
-         </li>
+         </li> #}
      {% endif %}
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
