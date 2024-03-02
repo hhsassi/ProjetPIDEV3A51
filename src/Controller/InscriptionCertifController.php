@@ -87,8 +87,8 @@ public function indexFront(InscriptionCertifRepository $inscriptionCertifReposit
             $entityManager->flush();
 
             $email = (new Email())
-    ->from($inscriptionCertif->getUser()->getEmail()) // Utilisez votre adresse email d'envoi réelle ici
-    ->to('ahmedfathallah358@gmail.com') // S'assurer que l'entité InscriptionCertif est liée à User
+    ->from('jarabnii@gmail.com') // Utilisez votre adresse email d'envoi réelle ici
+    ->to($inscriptionCertif->getUser()->getEmail()) // S'assurer que l'entité InscriptionCertif est liée à User
     ->subject('Confirmation d\'inscription à une certification')
     ->html('
         <!DOCTYPE html>
