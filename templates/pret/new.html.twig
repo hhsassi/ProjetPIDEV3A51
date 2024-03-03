@@ -21,7 +21,9 @@
             <div>
                 {{ form_row(form.valeur_garantie) }}
             </div>
-
+            <div>
+                {{ form_row(form.user) }}
+            </div>
             <div class="{% if not is_granted('ROLE_ADMIN') %} d-none {% endif %}">
                 {{ form_row(form.remboursements) }}
             </div>

@@ -64,6 +64,11 @@
                                     </a>
                                 </button>
                             </form>
+                                <button class="btn btn-secondary">
+                                    <a style="color:white;" href="{{ path('app_remboursement_export_clsx', {'id': remboursement.id}) }}">
+                                        <i class="fas fa-expand fa-2xs"></i> Exporter
+                                    </a>
+                                </button>
                             {% endif %}
                         </td>
                     </tr>

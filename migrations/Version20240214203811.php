@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace DoctrineMigrations\us;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -25,6 +25,7 @@ final class Version20240214203811 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
+        //
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE remboursement CHANGE pret_id pret_id INT DEFAULT NULL');
     }

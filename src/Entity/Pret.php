@@ -42,6 +42,9 @@ class Pret
     #[ORM\OneToMany(mappedBy: 'pret', targetEntity: Remboursement::class, cascade: ['remove'])]
     private Collection $remboursements;
 
+    #[ORM\OneToOne(targetEntity: User::class)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->remboursements = new ArrayCollection();
@@ -145,5 +148,17 @@ class Pret
     public function __toString()
     {
         return $this->motif; // Ou toute autre propriété que vous souhaitez afficher comme chaîne
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

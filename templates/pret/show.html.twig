@@ -33,6 +33,10 @@
                 <td>{{ pret.valeurGarantie }}</td>
             </tr>
             <tr>
+                <th>Attaché à</th>
+{#                <td>{{ pret.user.fullName }}</td>#}
+            </tr>
+            <tr>
                 <th>Remboursements</th>
                 <td>
                     {% if  pret.remboursements |length > 0%}
@@ -48,6 +52,7 @@
         </tbody>
     </table>
     <a href="{{ path('app_pret_index') }}" class="btn btn-outline-info">retour</a>
+    <a href="{{ path('app_pret_export_clsx', {'id': pret.id}) }}" class="btn btn-outline-warning">Exporter en Excel</a>
     </div>
     <div class="col-md-2"></div>
 </div>

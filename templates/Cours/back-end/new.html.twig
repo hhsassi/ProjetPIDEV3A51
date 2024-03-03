@@ -1,0 +1,12 @@
+{% extends '/dashboard/base.html.twig' %}
+{% block content %}
+    <h1>Add New Course</h1>
+
+     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-success">Create</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_cours') }}">Back to list</a>
+
+{% endblock %}

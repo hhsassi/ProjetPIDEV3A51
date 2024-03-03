@@ -35,6 +35,8 @@
             </tbody>
         </table>
         <a href="{{ path('app_remboursement_index') }}" class="btn btn-outline-info">retour</a>
+        <a href="{{ path('app_remboursement_export_clsx', {'id': remboursement.id}) }}" class="btn
+        btn-outline-warning">Exporter en Excel</a>
     </div>
     <div class="col-md-2"></div>
 </div>

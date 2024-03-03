@@ -1,0 +1,15 @@
+* Partie métier
+  - L'admin Peut créer des remboursements et les associés à un Prét en question
+  - L'admin Peut créer un Prêt et l'associé à un Utilisateur
+  - L'utilisateur peut créer un Prêt et l'association se fait automatiquement
+  - Si l'utilisateur a créer une demande d'un Prêt, il ne peut pas déposer une autre demande, SEULEMENT  il peut
+  consulter le prêt déjâ déposé
+
+* Bundles
+- Maker: pour générer des entités, controlleurs ect
+- Flash bundle: pour afficher des messages flash personalisés
+- Spreadsheetbundle pour l'export des tableaux au format excel Excel
+
+tri:
+remboursement : par durée DESC
+pret : par valeur DESC ( le plus récent au début)

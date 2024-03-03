@@ -1,0 +1,68 @@
+{% extends '/home_page/index.html.twig' %}
+
+{% block content %}
+    <h1>Certification Details</h1>
+    
+    <table class="table">   
+        <tr>
+            <th>ID</th>
+            <td>{{ certification.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ certification.nomCertif }}</td>
+        </tr>
+        <tr>
+            <th>Level</th>
+            <td>{{ certification.niveauCertif }}</td>
+        </tr>
+        <tr>
+            <th>Duration</th>
+            <td>{{ certification.dureeCertif }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ certification.descriotionCertif }}</td>
+        </tr>
+        <tr>
+            <th>Badge</th>
+            <td>
+                <img src="{{ asset('uploads/certifications/' ~ certification.badgeCertif) }}" alt="Badge" style="width: 100px; height: auto;">
+            </td>
+        </tr>
+    </table>
+
+     <h2>Courses in this Certification</h2>
+    {% if certification.cours|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Level</th>
+                <th>Actions</th> <!-- Optional, if you want to add actions like view, edit, delete -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for cours in certification.cours %}
+            <tr>
+                <td>{{ cours.id }}</td>
+                <td>{{ cours.TitreCours }}</td>
+                <td>{{ cours.descriptionCours }}</td>
+                <td>{{ cours.niveau }}</td>
+                <td>
+                    <!-- Example Action: Link to view course details -->
+                    <a href="{{ path('show_front_cours', {'id': cours.id}) }}" class="btn btn-info">View</a>
+                    <!-- Add more actions here if necessary -->
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No courses found for this certification.</p>
+    {% endif %}
+
+    <a href="{{ path('app_certification') }}" class="btn btn-secondary">Back to list</a>
+{% endblock %}

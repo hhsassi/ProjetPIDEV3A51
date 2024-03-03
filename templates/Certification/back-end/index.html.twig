@@ -1,0 +1,52 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+    <h1>Certification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomCertif</th>
+                <th>Description</th>
+                <th>NiveauCertif</th>
+                <th>DureeCertif</th>
+                <th>BadgeCertif</th>
+                <th>actions<th> </th>
+               <th> <button class="btn btn-primary" onclick="window.location='{{ path('new_certification') }}'"  >+</button></th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for certification in certifications %}
+    <tr>
+        <td>{{ certification.id }}</td>
+        <td>{{ certification.nomCertif }}</td>
+        <td>{{ certification.descriotionCertif }}</td>
+        <td>{{ certification.niveauCertif }}</td>
+        <td>{{ certification.dureeCertif }}</td>
+        <td>
+            <img src="{{ asset('uploads/certifications/' ~ certification.badgeCertif) }}" alt="Badge" style="width: 100px; height: auto;">
+        </td>
+        
+        <td>
+          <a href="{{ path('show_certification', {'id': certification.id}) }}" class="btn btn-info">View</a>
+            <a href="{{ path('edit_certification', {'id': certification.id}) }}" class="btn btn-primary">Edit</a>
+        
+            <form action="{{ path('delete_certification', {'id': certification.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ certification.id) }}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="7">No records found</td> <!-- Adjusted colspan to 7 to match the number of columns -->
+    </tr>
+{% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
+    

@@ -1,0 +1,69 @@
+{# templates/inscription_certif/pdf_template.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document d'Inscription</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .logo {
+            float: left; /* ou autre positionnement selon besoin */
+        }
+        .header, .footer { text-align: center; margin-bottom: 20px; }
+        .content { margin-top: 20px; }
+        .signature-space { margin-top: 40px; padding-top: 20px; border-top: 2px dotted #000; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Confirmation d'Inscription</h1>
+    </div>
+    <div class="logo">
+        <img src="../assets/images/homePage/logo.png" alt="Logo Banque" />
+    </div>
+    <div class="content">
+        <h2>Détails de l'Inscription</h2>
+        <table>
+            <tr>
+                <th>Nom de l'Utilisateur:</th>
+                <td>{{ inscription.user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom de l'Utilisateur:</th>
+                <td>{{ inscription.user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ inscription.user.email }}</td>
+            </tr>
+            <tr>
+                <th>Certification:</th>
+                <td>{{ inscription.certification.nomCertif }}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>{{ inscription.certification.descriotionCertif }}</td>
+            </tr>
+            <tr>
+                <th>Durée:</th>
+                <td>{{ inscription.certification.dureeCertif }} mois</td>
+            </tr>
+            <tr>
+                <th>Niveau:</th>
+                <td>{{ inscription.certification.niveauCertif }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="signature-space">
+        <p>Signature du Client:</p>
+        <p>Date:</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {{ "now"|date("Y") }} Artemis Bank. Tous droits réservés.</p>
+    </div>
+</body>
+</html>
