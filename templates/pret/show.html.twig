@@ -1,0 +1,59 @@
+{% extends '/dashboard/base.html.twig' %}
+ {% block title %}Consulter un prêt{% endblock %}
+
+{% block content %}
+<div class="row pt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3 class="text-muted">Détail de prêt</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pret.id }}</td>
+            </tr>
+            <tr>
+                <th>Valeur</th>
+                <td>{{ pret.valeur }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ pret.motif }}</td>
+            </tr>
+            <tr>
+                <th>Salaire</th>
+                <td>{{ pret.salaire }}</td>
+            </tr>
+            <tr>
+                <th>Garantie</th>
+                <td>{{ pret.garantie ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Valeur_garantie</th>
+                <td>{{ pret.valeurGarantie }}</td>
+            </tr>
+            <tr>
+                <th>Attaché à</th>
+{#                <td>{{ pret.user.fullName }}</td>#}
+            </tr>
+            <tr>
+                <th>Remboursements</th>
+                <td>
+                    {% if  pret.remboursements |length > 0%}
+                        {% for r in pret.remboursements %}
+                            <a href="{{ path('app_remboursement_show', {'id': r.id}) }}">{{ r.valeur }}</a>
+                            {% if not loop.last %} | {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        Pas de remboursements associés
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_pret_index') }}" class="btn btn-outline-info">retour</a>
+    <a href="{{ path('app_pret_export_clsx', {'id': pret.id}) }}" class="btn btn-outline-warning">Exporter en Excel</a>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

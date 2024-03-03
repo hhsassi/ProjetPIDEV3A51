@@ -1,0 +1,102 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block title %}Gestion des prêts{% endblock %}
+
+{% block content %}
+    <div class="row pt-5">
+        <div class="col-md-2 col-lg-2 col-sm-2"></div>
+        <div class="col-md-10 col-lg-10 col-sm-10">
+            <h2 class="mb-4 text-black-50-100">Administrer vos prêts !</h2>
+            {% for flashMessage in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <table class="table table-responsive table-striped">
+                <thead>
+                <tr>
+                    <th>#Id</th>
+                    <th>Valeur</th>
+                    <th>Motif</th>
+                    <th>Salaire</th>
+                    <th>Garantie</th>
+                    <th>Valeur_garantie</th>
+                    <th scope="col-2">Actions
+                        <button class="btn btn-sm btn-success">
+                            <a style="color:white;" href="{{ path('app_pret_new') }}">
+                                <i class="fas fa-plus fa-2xs"></i> Créer un nouveau prêt
+                            </a>
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pret in prets %}
+                    <tr>
+                        <td>{{ pret.id }}</td>
+                        <td>{{ pret.valeur }}</td>
+                        <td>{{ pret.motif }}</td>
+                        <td>{{ pret.salaire }}</td>
+                        <td>{{ pret.garantie ? 'Yes' : 'No' }}</td>
+                        <td>{{ pret.valeurGarantie }}</td>
+                        <td>
+                            <button class="btn btn-info">
+                                <a style="color:white;" href="{{ path('app_pret_show', {'id': pret.id}) }}">
+                                    <i class="fas fa-eye fa-2xs"></i> Voir
+                                </a>
+                            </button>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <button class="btn btn-warning">
+                                <a style="color:white;" href="{{ path('app_pret_edit', {'id': pret.id}) }}">
+                                    <i class="fas fa-edit fa-2xs"></i> Editer
+                                </a>
+                            </button>
+
+                            <form style="display:inline-block" id="myForm-{{ loop.index }}" method="POST" action="{{ path
+                                ('app_pret_delete',
+                                {'id': pret
+                            .id}) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_pret_' ~ pret.id)
+                                }}">
+                                <button class="btn btn-danger">
+                                    <a class="submitLink" data-form-id="myForm-{{ loop.index }}" style="color:white;"
+                                       href="#">
+                                        <i class="fas fa-trash fa-2xs"></i> Supprimer
+                                    </a>
+                                </button>
+                            </form>
+                            <button class="btn btn-secondary">
+                                <a style="color:white;" href="{{ path('app_pret_export_clsx', {'id': pret.id}) }}">
+                                    <i class="fas fa-expand fa-2xs"></i> Exporter
+                                </a>
+                            </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Aucun résultat trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        document.querySelectorAll(".submitLink").forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                const formId = this.getAttribute("data-form-id");
+                const form = document.getElementById(formId);
+                const confirm = window.confirm("Êtes-vous sûr de vouloir soumettre ce formulaire ?");
+                if(confirm) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

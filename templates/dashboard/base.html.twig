@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>{% block title %}SB Admin 2 - Blank!{% endblock %}</title>
 
     <!-- Custom fonts for this template-->
 <link href="{{ asset('assets/admin_template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -106,8 +106,8 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('assets/admin_template/js/sb-admin-2.min.js') }}"></script>
- 
 
+{% block javascripts %}
+{% endblock %}
 </body>
-
 </html>

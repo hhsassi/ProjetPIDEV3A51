@@ -8,7 +8,7 @@
             <div class="col">
                 <h1>Register</h1>
 
-                
+                {{ form_errors(registrationForm) }}
                 {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
                 <fieldset class="mb-3">
                     <legend>Veuillez saisir vos données</legend>
@@ -16,23 +16,20 @@
                     {{ form_row(registrationForm.cin,{ label:"Num Carte d'identite", attr: { 'class': 'form-control', 'pattern': '[0-9]+' } }) }}
                     {{ form_row(registrationForm.nom,{ label:"Votre Nom", attr: { 'class': 'form-control', 'pattern': '[^0-9]+' } }) }}
                     {{ form_row(registrationForm.prenom,{ label:"Votre Prenom", attr: { 'class': 'form-control', 'pattern': '[^0-9]+' } }) }}
-                    {{ form_row(registrationForm.numTel, { label:"Nuero De Telephone:", attr: { 'class': 'form-control', 'pattern': '[0-9]+' } }) }}
+                    {{ form_row(registrationForm.numTel, { label:"Numèro de Telephone:", attr: { 'class':'form-control', 'pattern': '[0-9]+' } }) }}
                     {{ form_row(registrationForm.adress,{ label:"Votre lieu de residence", attr: { 'class': 'form-control' } }) }}
                     {{ form_row(registrationForm.dob, { 'widget': 'choice', 'format': 'dd-MM-yyyy', 'years': range(1900, 2024), 'label': 'Date de naissance', 'attr': { 'class': 'form-control' } }) }}
                     {{ form_row(registrationForm.email,{ label:"Votre e-mail", attr: { 'class': 'form-control', 'pattern': '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' } }) }}
-                    {{ form_errors(registrationForm) }}
-                    {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password',
-                    attr: { 'class': 'form-control' }
-                }) }}
-                
+                    {{ form_row(registrationForm.password, {label: 'Password',attr: { 'class': 'form-control' }}) }}
+
+
+
+
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    <button type="submit" class="btn btn-primary btn-lg my-3">Sign Up</button>
+                    {{ form_end(registrationForm) }}
                 </fieldset>
-
-                
-                {{ form_row(registrationForm.agreeTerms) }}
-
-                <button type="submit" class="btn btn-primary btn-lg my-3">Sign Up</button>
-                {{ form_end(registrationForm) }}
             </div>
         </div>
     </section>

@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir mes prêts
+    {% block linkcss %}
+        <link rel="stylesheet" href="../assets/css/homePage/styles.css"/>
+    {% endblock %}
+
+    {% block body %}
+        <header>
+            <nav>
+                <div class="nav__logo">
+                    <a id="navImg" href="{{ path('app_home_page') }}">
+                        <img src="../assets/images/homePage/iconWhite0.png" alt="">Artemis
+                        <span class="light-logo">Bank</span></a>
+                </div>
+                <ul class="nav__links">
+                    <li class="link">Home</li>
+                    {% if  app.user %}
+                        <li class="link"><a href="{{ path('app_pret_single') }}"> Voir mes prêts </a></li>
+                        {% if not app.user.pret %}
+                            <li class="link"><a href="{{ path('app_pret_new') }}"> Demande d'un prêt </a></li>
+                        {% endif %}
+                        <li class="link login"><a href="{{ path('user_profile') }}"> Compte </a></li>
+                    {% else %}
+                        <li class="link login"><a href="{{ path('app_login') }}">Login</a></li>
+                        <li class="link signUp"><a href="{{ path('app_register') }}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <div class="mt-5 container">
+            <div class="mt-5 col-md-10">
+                <h3 class="text-black-50 mb-4"> Voir mes prêts</h3>
+
+                {% if prets %}
+                    <table class="table table-responsive table-active">
+                        <thead>
+                        <tr>
+                            <th>Valeur</th>
+                            <th>Motif</th>
+                            <th>Salaire</th>
+                            <th>Garantie</th>
+                            <th>Valeur garantie</th>
+                            <th>Remboursements</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pret in prets %}
+                            <tr>
+                                <td>{{ pret.valeur }}</td>
+                                <td>{{ pret.motif }}</td>
+                                <td>{{ pret.salaire }}</td>
+                                <td>{{ pret.garantie ? 'Actif' : 'Non actif' }}</td>
+                                <td>{{ pret.valeurGarantie }}</td>
+                                <td>
+                                    {% if  pret.remboursements |length > 0 %}
+                                        {% for r in pret.remboursements %}
+                                            <a href="{{ path('app_remboursement_show', {'id': r.id}) }}">{{ r.valeur }}</a>
+                                            {% if not loop.last %} | {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-center"><b>NA</b></p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_pret_export_clsx', {'id': pret.id}) }}" class="btn
+                                    btn-outline-info">Exporter en Excel</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <h3>Pas des prêts enrgistrés !!</h3>
+                        <h4>
+                            <a href="{{ path('app_pret_new') }}" class="text-decoration-none text-black-50">Créer un
+                                nouveau prêt</a>
+                        </h4>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+        <footer>
+            <div class="footer-left">
+                <img src="../assets/images/homePage/logo.png" alt="Logo">
+            </div>
+            <div class="footer-center">
+                <ul>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Agreements</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <a href="#"><img src="../assets/images/homePage/meta.png" alt="Facebook"></a>
+                <a href="#"><img src="../assets/images/homePage/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="../assets/images/homePage/instagram.png" alt="Instagram"></a>
+            </div>
+        </footer>
+    {% endblock %}
+{% endblock %}

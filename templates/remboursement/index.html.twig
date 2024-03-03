@@ -1,0 +1,100 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block title %}Gestion des remboursements{% endblock %}
+
+{% block content %}
+    <div class="row pt-5">
+        <div class="col-md-2 col-lg-2 col-sm-2"></div>
+        <div class="col-md-10 col-lg-10 col-sm-10">
+            <h2 class="mb-4 text-black-50-100">Administrer vos remboursements !</h2>
+            {% for flashMessage in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <table class="table table-responsive table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Valeur</th>
+                    <th>Duree</th>
+                    <th>Valeur_tranche</th>
+                    <th>Etat</th>
+                    <th scope="col-4">Actions
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <button class="btn btn-sm btn-success">
+                                <a style="color:white;" href="{{ path('app_remboursement_new') }}">
+                                    <i class="fas fa-plus fa-2xs"></i> Créer une nouvelle remboursement
+                                </a>
+                            </button>
+                        {% endif %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for remboursement in remboursements %}
+                    <tr>
+                        <td>{{ remboursement.id }}</td>
+                        <td>{{ remboursement.valeur }}</td>
+                        <td>{{ remboursement.duree }}</td>
+                        <td>{{ remboursement.valeurTranche }}</td>
+                        <td>{{ remboursement.etat }}</td>
+                        <td>
+                            <button class="btn btn-info">
+                                <a style="color:white;" href="{{ path('app_remboursement_show', {'id': remboursement.id}) }}">
+                                    <i class="fas fa-eye fa-2xs"></i> Voir
+                                </a>
+                            </button>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <button class="btn btn-warning">
+                                <a style="color:white;" href="{{ path('app_remboursement_edit', {'id': remboursement.id}) }}">
+                                    <i class="fas fa-edit fa-2xs"></i> Editer
+                                </a>
+                            </button>
+                            <form style="display:inline-block" id="myForm-{{ loop.index }}" method="POST" action="{{
+                            path('app_remboursement_delete', {'id': remboursement
+                            .id}) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_remboursement_' ~
+                                    remboursement.id)
+                                }}">
+                                <button class="btn btn-danger">
+                                    <a class="submitLink" data-form-id="myForm-{{ loop.index }}" style="color:white;"
+                                       href="#">
+                                        <i class="fas fa-trash fa-2xs"></i> Supprimer
+                                    </a>
+                                </button>
+                            </form>
+                                <button class="btn btn-secondary">
+                                    <a style="color:white;" href="{{ path('app_remboursement_export_clsx', {'id': remboursement.id}) }}">
+                                        <i class="fas fa-expand fa-2xs"></i> Exporter
+                                    </a>
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Aucun résultat trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        document.querySelectorAll(".submitLink").forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                const formId = this.getAttribute("data-form-id");
+                const form = document.getElementById(formId);
+                const confirm = window.confirm("Êtes-vous sûr de vouloir soumettre ce formulaire ?");
+                if(confirm) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

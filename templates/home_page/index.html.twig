@@ -13,12 +13,16 @@
         <a id="navImg" href="#"><img  src="../assets/images/homePage/iconWhite0.png" alt=""></a><a>Artemis <span class="light-logo">Bank</span></a>
       </div>
       <ul class="nav__links">
-        <li class="link">Home</li>
-        <li class="link">Features</li>
-        <li class="link">About Us</li>
-        <li class="link">Contact Us</li>
+        <li class="link"><a class="nav-link" href="{{path("app_home_page")}}">Home</a></li>
+        <li class="link" > <a class="nav-link" href="{{path("front_certification")}}"> Certfication </a> </li>
+        <li class="link" > <a class="nav-link" href="{{path("front_cours")}}"> Cours </a> </li>
+        <li class="link" > <a class="nav-link" href="{{path("inscription_certif_indexFront")}}"> Cours inscris </a> </li>
           {% if  app.user %}
-                  <li class="link login"  ><a href="{{ path('user_profile') }}"> Compte </a> </li>
+            <li class="link"  ><a href="{{ path('app_pret_single') }}"> Voir mes prêts </a> </li>
+            {% if not app.user.pret %}
+              <li class="link"><a href="{{ path('app_pret_new') }}"> Demande d'un prêt </a></li>
+            {% endif %}
+            <li class="link login"  ><a href="{{ path('user_profile') }}"> Compte </a> </li>
                   {% if is_granted('ROLE_ADMIN') %}
                    <li class="link login"  > <a href="{{ path('app_gestion_user') }}"> Dashboard Adminstratif </a> </li>
 

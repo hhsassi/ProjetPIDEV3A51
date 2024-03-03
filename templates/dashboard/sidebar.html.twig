@@ -1,11 +1,13 @@
  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">
+                    <b>Artemis Bank</b>
+                </div>
             </a>
 
             <!-- Divider -->
@@ -24,11 +26,27 @@
 
             
             <!-- Nav Item - NON ADMIN -->
-            <li class="nav-item">
+     <li class="nav-item">
                 <a class="nav-link" href="{{path("user_profile")}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Profile</span></a>
             </li>
+     <li class="nav-item">  <!-- tout ca va etre en partie admin pour l'integration tache certif -->
+         <a class="nav-link" href="{{path("app_certification")}}">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span> Gérer Les Certification </span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="{{path("app_cours")}}">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span> Gérer Les Cours </span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="{{path("inscription_certif_index")}}">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span> Gérer Les inscriptionCertif </span></a>
+     </li                                         >
+
             {% if is_granted('ROLE_ADMIN') %}
                 <!-- PARTIE ADMIN -->
                 <li class="nav-item">
@@ -36,14 +54,29 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span> Gérer Les Utilisateurs </span></a>
                 </li>
-            
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path("app_pret_index")}}">
+                        <i class="fas fa-fw fa-university"></i>
+                        <span>Gérer les prêts</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path("app_remboursement_index")}}">
+                        <i class="fas fa-fw fa-university"></i>
+                        <span>Gérer les remboursements</span></a>
+                </li>
             {% endif %}
 
-           
 
+            <!-- Nav Item - NON ADMIN -->
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
+             {% if not is_granted('ROLE_ADMIN') %}
+         {# <li class="nav-item">
+             <a class="nav-link" href="{{path("app_pret_index")}}">
+                 <i class="fas fa-address-card"></i>
+                 <span>Voir mes prêts</span></a>
+         </li> #}
+     {% endif %}
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

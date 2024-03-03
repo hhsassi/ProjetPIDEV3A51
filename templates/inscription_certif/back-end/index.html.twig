@@ -1,0 +1,53 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block content %}
+<h1>InscriptionCertif Index</h1>
+<table class="table">
+       <thead>
+            <tr>
+                <th>ID</th>
+                
+                <th>Email de l'utilisateur</th> <!-- Ajouté -->
+                <th>Nom de l'utilisateur</th> <!-- Ajouté -->
+                <th>Prénom de l'utilisateur</th> <!-- Ajouté -->
+                <th>Certification</th>
+                <th>Durée (mois)</th> <!-- Ajouté -->
+                <th>Niveau</th> <!-- Ajouté -->
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inscription in inscription_certifs %}
+            <tr>
+                <td>{{ inscription.id }}</td>
+                <td>{{ inscription.user.email }}</td>
+                <td>{{ inscription.user.nom }}</td>
+                <td>{{ inscription.user.prenom }}</td>
+                <td>{{ inscription.certification.nomCertif }}</td>
+                <td>{{ inscription.certification.dureeCertif }}</td>
+                <td>{{ inscription.certification.niveauCertif }}</td>
+                <td>
+                    <a href="{{ path('inscription_certif_show', {'id': inscription.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('inscription_certif_edit', {'id': inscription.id}) }}" class="btn btn-primary">Modifier</a>
+                    <form action="{{ path('inscription_certif_delete', {'id': inscription.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr ?');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ inscription.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+</td>
+<td>
+    <!-- Autres actions -->
+    <a href="{{ path('inscription_certif_pdf', {'id': inscription.id}) }}" class="btn btn-secondary">Générer PDF</a>
+</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucune inscription trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+</table>
+<a href="{{ path('inscription_certif_new') }}" class="btn btn-success">Créer une nouvelle inscription</a>
+
+{% endblock %}

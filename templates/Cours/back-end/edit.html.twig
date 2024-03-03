@@ -1,0 +1,14 @@
+{% extends '/dashboard/base.html.twig' %}
+
+{% block title %}Edit Course{% endblock %}
+
+{% block content %}
+    <h1>Edit Course</h1>
+
+     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_cours') }}" class="btn btn-secondary">Back to list</a>
+{% endblock %}
